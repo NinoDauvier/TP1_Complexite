@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="src">
+    <CLASSES />
+    <JAVADOC>
+      <root url="file://$USER_HOME$/Documents/cours/ARO/complexité/JavaPlot-0.5.0/dist/javadoc" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="file://$USER_HOME$/Documents/cours/ARO/complexité/JavaPlot-0.5.0/demo/src" />
+      <root url="file://$USER_HOME$/Documents/cours/ARO/complexité/JavaPlot-0.5.0/src" />
+    </SOURCES>
+  </library>
+</component>
