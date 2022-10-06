@@ -1,44 +1,9 @@
 package Fibonacci_Matrice;
-import  java.util.Scanner;
-public class Matrice {
-    private static int mod = (int)1e9+7;//mod
+import java.util.Scanner;
 
-    public static void main(String[] args) {
-        System.out.println("Entrer un nombre: ");
-        Scanner scanner = new Scanner(System.in);
-        while(true){
-            int n = scanner.nextInt();
-            long t1 = System.currentTimeMillis();
-            int test = fibbonaci(n);
-            long t2 = System.currentTimeMillis();
-            System.out.println(test);
-            System.out.println("time: "+(t2-t1));
-        }
-    }
-
-    public static int fibbonaci(int n){
-        if(n<=1) return n;
-        long[][] matriceBase = new long[][]{
-                {1,1},
-                {1,0}
-        } ;
-        long[][] matriceRes = new long[][]{
-                {1},
-                {0}
-        };
-       int x = n-1;
-       while(x!=0){
-           if((x&1) != 0){//x ->impair
-               matriceRes = matriceMultiply(matriceBase,matriceRes);
-           }//x ->pair
-           matriceBase = matriceMultiply(matriceBase,matriceBase);
-           x>>=1;
-       }
-       return (int)(matriceRes[0][0]%mod);
-    }
-
-
-    public static long[][]matriceMultiply(long[][]m, long[][]n){ //multiplication des deux matrices
+public class Main {
+    static int mod = 1000000007;
+    private static long[][]matriceMultiply(long[][]m, long[][]n){ //multiplication des deux matrices
         int rows = m.length; //ligne de la première matrice
         int cols = n[0].length; //colonne de la deuxième matrice
         long nouveau[][] = new long[rows][cols];
@@ -51,5 +16,34 @@ public class Matrice {
             }
         }
         return nouveau;
+    }
+
+    //Calcul du terme
+    private static long fibonacci_m(long n){
+        if(n<2) return n;
+        long[][] matrixBase = {{1,1},{1,0}};
+        long[][] matrixRes = pow(matrixBase,n-1);
+        return matrixRes[0][0];
+    }
+    //exponentiating by squaring, O(logn)
+    public static long[][] pow(long[][]a, long n){
+        long[][] matrixBase = {{1,0},{0,1}};
+        while(n>0){
+            if((n&1)==1){
+                matrixBase = matriceMultiply(matrixBase,a);
+            }
+            n>>=1;
+            a = matriceMultiply(a,a);
+        }
+        return matrixBase;
+    }
+    public static void main(String[] args) {
+        while(true){
+            System.out.println("Entrer un nombre: ");
+            Scanner scan = new Scanner(System.in);
+            int n = scan.nextInt();
+            long res = fibonacci_m(n);
+            System.out.println(res);
+        }
     }
 }
