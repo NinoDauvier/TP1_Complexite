@@ -72,35 +72,33 @@ public class Fibonacci_final {
         long nouveau[][] = new long[rows][cols];
         for(int i=0;i<rows;i++){
             for(int j=0;j<cols;j++){
+                if(nouveau[i][j]==0) continue;
                 for(int k=0;k<n.length;k++){
-                    nouveau[i][j]+=m[i][k]*n[k][j];
-                    nouveau[i][j]%=mod;//résult pour chaque position de la nouvelle matrice
+                    nouveau[i][j]+=(m[i][k]*n[k][j])%mod;
+                    //nouveau[i][j]%=mod;//résult pour chaque position de la nouvelle matrice
                 }
             }
         }
         return nouveau;
     }
-
-//Calcul du terme
+    //Calcul du terme
     private static long fibonacci_m(long n){
-        if(n<=1) return n;
-        long[][] matriceBase = new long[][]{
-                {1,1},
-                {1,0}
-        } ;
-        long[][] matriceRes = new long[][]{
-                {1},
-                {0}
-        };
-        long x = n-1;
-        while(x!=0){
-            if((x&1) != 0){//x ->impair
-                matriceRes = matriceMultiply(matriceBase,matriceRes);
-            }//x ->pair
-            matriceBase = matriceMultiply(matriceBase,matriceBase);
-            x>>=1;
+        if(n<2) return n;
+        long[][] matrixBase = {{1,1},{1,0}};
+        long[][] matrixRes = pow(matrixBase,n-1);
+        return matrixRes[0][0];
+    }
+    //exponentiating by squaring, O(logn)
+    public static long[][] pow(long[][]a, long n){
+        long[][] matrixBase = {{1,0},{0,1}};
+        while(n>0){
+            if((n&1)==1){                                   //impair
+                matrixBase = matriceMultiply(matrixBase,a);
+            }
+            n=n>>1;                                         //bitwise operation peut reduire le temps de calcul
+            a = matriceMultiply(a,a);
         }
-        return (int)(matriceRes[0][0]%mod);
+        return matrixBase;
     }
 
 
