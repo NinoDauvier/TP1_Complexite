@@ -1,24 +1,23 @@
 public class Transition {
-    int word;
+    //la lettre, le mouvement et l'état d'arrivée définissant la transition
+    int symbol;
     int move;
     int nextState;
 
     boolean isFinal;
 
-    public Transition(int word, int move, int nextState){
-        this.word = word;
+    public Transition(int symbol, int move, int nextState, int finalState){
+        this.symbol = symbol;
         this.move = move;
         this.nextState = nextState;
 
-        this.isFinal = false;
+        //retient si la transition amène a un état final
+        this.isFinal = nextState == finalState;
     }
 
-    public Transition(boolean isFinal){
-        this.isFinal = true;
-    }
-
-    public int getWord(){
-        return word;
+    //getters classique
+    public int getSymbol(){
+        return symbol;
     }
     public int getMove(){
         return move;
