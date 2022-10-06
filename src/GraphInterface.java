@@ -1,8 +1,8 @@
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public interface GraphInterface {
     boolean get(int i, int j);
-    ArrayList<Integer> getNeighbor(int i);
-    ArrayList<Integer> getNotNeighbor(int i);
+    LinkedList<Integer> getNeighbor(int i);
+    LinkedList<Integer> getNotNeighbor(int i);
     int getNbVertices();
 }

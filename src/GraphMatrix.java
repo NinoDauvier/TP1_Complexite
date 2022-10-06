@@ -1,13 +1,13 @@
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.Objects;
 
-public class AdjacencyGraph implements GraphInterface {
+public class GraphMatrix implements GraphInterface {
     boolean[][] adjacencyMatrix;
     int nbVertices;
 
-    public AdjacencyGraph(String path) throws IOException {
+    public GraphMatrix(String path) throws IOException {
         File file = new File(path);
         BufferedReader br = new BufferedReader(new FileReader(file));
 
@@ -31,8 +31,8 @@ public class AdjacencyGraph implements GraphInterface {
         return adjacencyMatrix[i][j];
     }
 
-    public ArrayList<Integer> getNeighbor(int i) {
-        ArrayList<Integer> list = new ArrayList<>();
+    public LinkedList<Integer> getNeighbor(int i) {
+        LinkedList<Integer> list = new LinkedList<>();
         for (int j = 0; j < adjacencyMatrix.length; j++) {
             if (adjacencyMatrix[i][j]){
                 list.add(i);
@@ -41,8 +41,8 @@ public class AdjacencyGraph implements GraphInterface {
         return list;
     }
 
-    public ArrayList<Integer> getNotNeighbor(int i) {
-        ArrayList<Integer> list = new ArrayList<>();
+    public LinkedList<Integer> getNotNeighbor(int i) {
+        LinkedList<Integer> list = new LinkedList<>();
         for (int j = 0; j < adjacencyMatrix.length; j++) {
             if (!adjacencyMatrix[i][j] && i!=j){
                 list.add(j);

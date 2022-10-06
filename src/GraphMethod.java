@@ -1,11 +1,10 @@
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.*;
 
 public class GraphMethod {
 
-    public static boolean isVoidZone(GraphInterface graph, ArrayList<Integer> list){
+    public static boolean isVoidZone(GraphInterface graph, LinkedList<Integer> list){
 
         for(ListIterator<Integer> outer = list.listIterator(); outer.hasNext() ; ) {
             int i = outer.next();
@@ -20,7 +19,7 @@ public class GraphMethod {
     }
 
     public static List<Integer> voidZoneMaximal(GraphInterface graph){
-        ArrayList<Integer> list = new ArrayList<>();
+        LinkedList<Integer> list = new LinkedList<>();
         boolean toAdd;
         for (int i = 0; i < graph.getNbVertices(); i++) {
             toAdd = true;
@@ -37,42 +36,41 @@ public class GraphMethod {
     }
 
     public static List<Integer> voidZoneMaximum(GraphInterface graph){
-        List<Integer> candidate = new ArrayList<>();
+        LinkedList<Integer> candidate = new LinkedList<>();
         for (int i = 0; i < graph.getNbVertices(); i++) {
             candidate.add(i);
         }
-        return maxRecursive(new ArrayList<>(), candidate, new ArrayList<>(), graph);
+        return maxRecursive(new LinkedList<>(), candidate, new LinkedList<>(), graph);
     }
 
-    private static List<Integer> maxRecursive(List<Integer> selected,List<Integer> candidate,List<Integer> treated, GraphInterface graph){
+    private static LinkedList<Integer> maxRecursive(LinkedList<Integer> selected,LinkedList<Integer> candidate,LinkedList<Integer> treated, GraphInterface graph){
         if (candidate.isEmpty() && treated.isEmpty()){
             return selected;
         }
 
-        List<Integer> maxZone = new ArrayList<>();
-//        System.out.println(selected+""+ candidate+""+ treated);
-        for (int i: candidate){
-            List<Integer> potentialVerticies = graph.getNotNeighbor(i);
-            List<Integer> newCandidate = intersection(candidate, potentialVerticies);
-            List<Integer> newTreated = intersection(treated, potentialVerticies);
-            List<Integer> newSelected = new ArrayList<>(selected);
+        LinkedList<Integer> maxZone = new LinkedList<>();
+        int i;
+        while (!candidate.isEmpty()){
+            i = candidate.remove();
+            LinkedList<Integer> potentialVerticies = graph.getNotNeighbor(i);
+            LinkedList<Integer> newCandidate = intersection(candidate, potentialVerticies);
+            LinkedList<Integer> newTreated = intersection(treated, potentialVerticies);
+            LinkedList<Integer> newSelected = new LinkedList<>(selected);
             newSelected.add(i);
-            System.out.println(selected+""+i);
+            treated.add(i);
 
-
-            List<Integer> newZone = maxRecursive(newSelected, newCandidate, newTreated, graph);
+            LinkedList<Integer> newZone = maxRecursive(newSelected, newCandidate, newTreated, graph);
             if(newZone.size() > maxZone.size()){
                 maxZone = newZone;
             }
-            System.out.println(newZone);
         }
         return maxZone;
     }
 
-    private static List<Integer> intersection(List<Integer> l1, List<Integer> l2) {
+    private static LinkedList<Integer> intersection(LinkedList<Integer> l1, LinkedList<Integer> l2) {
         ListIterator<Integer> it1 = l1.listIterator();
         ListIterator<Integer> it2 = l2.listIterator();
-        List<Integer> intersect = new ArrayList<>();
+        LinkedList<Integer> intersect = new LinkedList<>();
         int n1;
         int n2;
 
@@ -88,7 +86,6 @@ public class GraphMethod {
             }
 
         }
-//        System.out.println(l1+""+ l2+""+ intersect);
         return intersect;
     }
 
@@ -99,7 +96,7 @@ public class GraphMethod {
         }
         Arrays.sort(vertices);
 
-        ArrayList<Integer> list = new ArrayList<>();
+        LinkedList<Integer> list = new LinkedList<>();
         boolean toAdd;
         for (int i = 0; i < graph.getNbVertices(); i++) {
             toAdd = true;
