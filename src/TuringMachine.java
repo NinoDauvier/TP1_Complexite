@@ -72,7 +72,7 @@ public class TuringMachine {
             System.out.println(new String(new char[pointer * 3 + 1]).replace('\0', ' ') + "I");
             this.printTape();
             step();
-            Thread.sleep(1000);
+            Thread.sleep(100);
         }
     }
 
