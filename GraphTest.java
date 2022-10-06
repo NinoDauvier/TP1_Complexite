@@ -1,60 +1,66 @@
-import java.sql.SQLOutput;
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.Arrays;
 
-public class GraphTest {
-
-    public boolean testZoneVide(Graph g1,Graph g2){
-
-        return true;
+class Graph{
+    private ArrayList<String> vertexList;
+    private int[][] edges;
+    private int nbEdges;
+    public Graph(int n){
+        vertexList = new ArrayList<>();
+        edges = new int[n][n];
+        nbEdges = 0;
+    }
+    public void insertVertex(String vertex){
+        vertexList.add(vertex);
+    }
+    public void insertEdge(int v1,int v2,int weight){
+        edges[v1][v2] = weight;
+        edges[v2][v1] = weight;
+        nbEdges++;
+    }
+    public int getNbVertex(){
+        return vertexList.size();
+    }
+    public String getValueByIndex(int i){
+        return vertexList.get(i);
+    }
+    public int getWeight(int v1,int v2){
+        return edges[v1][v2];
     }
 
-//    public Graph maximaleZV(Graph graph){
-//
-//    }
-//
-//    public Graph maximumZVC(Graph graph){
-//
-//    }
-//
-//    public Graph maximumZVI(Graph graph){
-//
-//    }
-
-    public static Graph inputGraph() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter number of vertices");
-        int n = scanner.nextInt();
-
-        ArrayList<String> vertices = new ArrayList<>();
-        for (int i = 0; i < n; i++) {
-            System.out.println("Enter a vertex: " + i);
-            vertices.add(scanner.next());
+    public Graph deleteVertex(String v1) {
+        int x = vertexList.indexOf(v1);
+        int nbVertex = vertexList.size();
+        if(!vertexList.contains(v1)){
+            System.out.println("This vertex does not exist!");
         }
-
-        Graph graph = new Graph(n);
-        for (String vertices1 : vertices) {
-            graph.insertVertex(vertices1);
+        for(int i = x;i<nbVertex-1;++i){
+            edges[i] = edges[i+1];
         }
-
-        while (true) {
-            System.out.println("Enter two vertices with one edge or 'Q' to quit");
-            String v1 = scanner.next();
-            if(!vertices.contains(v1)){
-                System.out.println("Input error, game over");
-                break;
-            }
-            String v2 = scanner.next();
-            if (vertices.contains(v1) && vertices.contains(v2)) {
-                graph.insertEdge(vertices.indexOf(v1), vertices.indexOf(v2), 1);
+        for(int i = x;i<nbVertex-1;++i){
+            for(int j = 0;j<nbVertex;++j){
+                edges[i][j] = edges[i+1][j];
             }
         }
-        return graph;
+        for(int i = 0;i<nbVertex;++i){
+            for(int j = x;j<nbVertex-1;++j){
+                edges[i][j] = edges[i][j+1];
+            }
+        }
+        --nbVertex;
+        vertexList.remove(v1);
+        Graph g1 = new Graph(nbVertex);
+        g1.vertexList = vertexList;
+        for(int i = 0;i<nbVertex;i++){
+            for(int j= 0 ;j<nbVertex;j++){
+                g1.edges[i][j] = edges[i][j];
+            }
+        }
+        return g1;
     }
-    public static void main(String[] args) {
-
-        Graph g1 = inputGraph();;
-
-        g1.showGraph();
+    public void showGraph(){
+        for(int[] link: edges){
+            System.err.println(Arrays.toString(link));
+        }
     }
 }
