@@ -105,16 +105,17 @@ public class Fibonacci_final {
     public void solve(){
         //On calcule le n-ieme terme de la suite pour chaque valeur dans test_values
         long debut, fin ;
+        long debut3,fin3;
         for(int i = 0 ; i < this.nb_calculs ; i++) {
-            debut = System.currentTimeMillis() ;
-
             if(this.type == 1)fibonacci_i(this.test_values_i[i]) ;
             if(this.type == 2)fibonacci_r(this.test_values_r[i]) ;
-            if(this.type == 3)fibonacci_m(this.test_values_m[i]) ;
-            /*-------------------------------------------------------------------------------------------------*/
-
-            fin = System.currentTimeMillis() ;
-            this.execution_times[i] = fin-debut ;
+            if(this.type == 3){
+                debut3 = System.nanoTime();
+                fibonacci_m(this.test_values_m[i]) ;
+                fin3 = System.nanoTime();
+                this.execution_times[i] = fin3-debut3;
+                continue;
+            }
         }
     }
 
