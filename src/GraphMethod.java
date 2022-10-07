@@ -40,12 +40,15 @@ public class GraphMethod {
         for (int i = 0; i < graph.getNbVertices(); i++) {
             candidate.add(i);
         }
-        return maxRecursive(new LinkedList<>(), candidate, new LinkedList<>(), graph);
+        return maxRecursive(new LinkedList<>(), candidate, new LinkedList<>(), graph, 0);
     }
 
-    private static LinkedList<Integer> maxRecursive(LinkedList<Integer> selected,LinkedList<Integer> candidate,LinkedList<Integer> treated, GraphInterface graph){
-        if (candidate.isEmpty() && treated.isEmpty()){
+    private static LinkedList<Integer> maxRecursive(LinkedList<Integer> selected,LinkedList<Integer> candidate,LinkedList<Integer> treated, GraphInterface graph, int currentmax){
+        if (candidate.isEmpty()){
             return selected;
+        }
+        if (selected.size() + candidate.size() <= currentmax){
+            return new LinkedList<>();
         }
 
         LinkedList<Integer> maxZone = new LinkedList<>();
@@ -59,8 +62,9 @@ public class GraphMethod {
             newSelected.add(i);
             treated.add(i);
 
-            LinkedList<Integer> newZone = maxRecursive(newSelected, newCandidate, newTreated, graph);
+            LinkedList<Integer> newZone = maxRecursive(newSelected, newCandidate, newTreated, graph, currentmax);
             if(newZone.size() > maxZone.size()){
+                currentmax = newZone.size();
                 maxZone = newZone;
             }
         }

@@ -45,10 +45,15 @@ public class GraphList  implements GraphInterface {
 
     public LinkedList<Integer> getNotNeighbor(int i) {
         LinkedList<Integer> list = new LinkedList<>();
-        for (int j = 0; j < adjacencyList.length; j++) {
-            if (!adjacencyList[i].contains(j) && i!=j){
+        ListIterator<Integer> iter = list.listIterator();
+        int n1 = iter.next();
+        int j = 0;
+        while (iter.hasNext() && j < adjacencyList.length){
+            if (i!=j && n1 == j) {
                 list.add(j);
+                n1 = iter.next();
             }
+            j++;
         }
         return list;
     }
